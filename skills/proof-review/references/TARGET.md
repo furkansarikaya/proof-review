@@ -43,7 +43,7 @@ Wherever a command below shows `<path>`, the path comes from git's `-z` output a
 | file content | `git show <head>:<path>` | read the file |
 | untracked | none | `git ls-files --others --exclude-standard -z` (read directly; `git diff` omits them; count as fully added) |
 
-Run git with `-c diff.noprefix=false -c diff.mnemonicPrefix=false -c color.diff=false` and `--no-ext-diff` when output is parsed. For `working_tree` also save `evidence/working-tree-tree.txt`: the id of a git tree holding the current tracked and untracked, non-ignored content, computed without touching the real index: `d=$(mktemp -d); cp "$(git rev-parse --git-path index)" "$d/index" 2>/dev/null; GIT_INDEX_FILE="$d/index" git add -A && GIT_INDEX_FILE="$d/index" git write-tree; rm -rf "$d"`. Re-runs compare it ([REPORTING.md](REPORTING.md#re-runs)). Overview command for a working tree: `git status --porcelain=v1 --untracked-files=all`.
+Run git with `-c diff.noprefix=false -c diff.mnemonicPrefix=false -c color.diff=false` and `--no-ext-diff` when output is parsed. For `working_tree` also save `evidence/working-tree-tree.txt`: the id of a git tree holding the current tracked and untracked, non-ignored content, computed without touching the real index: `d=$(mktemp -d); cp "$(git rev-parse --git-path index)" "$d/index" 2>/dev/null; GIT_INDEX_FILE="$d/index" git add -A && GIT_INDEX_FILE="$d/index" git write-tree; rm -f "$d/index"; rmdir "$d"`. Re-runs compare it ([REPORTING.md](REPORTING.md#re-runs)). Overview command for a working tree: `git status --porcelain=v1 --untracked-files=all`.
 
 ### Working tree
 

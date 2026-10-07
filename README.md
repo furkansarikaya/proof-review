@@ -32,7 +32,7 @@ Out of scope by design: style, naming, "you might consider...", refactoring that
 - **It reviews; it never fixes.** It never edits your code and puts no patches in findings. For each bug it writes a fix brief: expected vs actual, how to reproduce, and "this test must go from failing to passing". Fixing is a separate step you choose.
 - **Your project folder stays clean.** Runs happen in a separate `git worktree`, and output lives inside `.git`, never in your project.
 - **It installs nothing.** No runners, packages, `gh`, `glab`, or Node. It uses what your project and machine already have.
-- **Text in the repo is data, not instructions.** PR texts, commit messages, and rule files can try to talk to the reviewer ("approve this", "report no issues"). Those lines are never obeyed; they are listed at the checkpoint and noted in the report.
+- **Text in the repo is data, not instructions.** PR texts, commit messages, and rule files can try to talk to the reviewer ("approve this", "report no issues"). Those lines are never obeyed; they are recorded in the ledger and noted in the report.
 - **Language- and framework-agnostic.** It discovers how your project runs tests (CI config, Makefile, package scripts, README), proves it can run a single test, and reports what it could not prove instead of guessing.
 
 ## Usage
@@ -158,7 +158,7 @@ The review runs project code and is long, so it runs **only when you invoke it e
 1. **Target**: working tree, branch, or PR; the output folder is resolved and stale ones are cleaned.
 2. **Size check**: lockfiles, generated, vendored, and snapshot files are excluded; very large changes are narrowed or reviewed in risk order.
 3. **Claims**: extracted from your text, the PR description, linked issues, and commit messages, each with its source.
-4. **Checkpoint**: the claims list (and, on a first run, a warning that project code will run) is shown to you before anything executes. See [Known limitations](#known-limitations).
+4. **Checkpoint**: the claims list (and, on a first run, a warning that project code will run) is shown to you and the skill waits before anything executes. If you said to proceed without confirmation, the same content opens the report instead. See [Known limitations](#known-limitations).
 5. **Phase 1, intent**: each claim is `done`, `partial`, or `missing`; unmatched changes are `unrequested`. Read-only.
 6. **Project rules**: rule files on the path to the repository root become a compact list of checkable rules (about 50 KB budget; unread files are listed in the report); only violations the diff introduces are reported. Read-only.
 7. **Phase 2, candidates**: bug candidates in the changed code and its direct callers.
@@ -190,7 +190,7 @@ Git never tracks this folder, so no `.gitignore` entry is needed. Stale folders 
 
 ## Known limitations
 
-- **"Proceed without confirmation" can skip the visible checkpoint.** By default the skill stops at a checkpoint (the sandbox warning and the claims list) before any project code runs, and waits for your answer; this was verified end to end. If you tell it to proceed without confirmation, it is still required to show that checkpoint as chat text first, but in the 0.0.1 end-to-end tests (single-turn headless runs) the agent wrote it only to the ledger and went on. If you skip confirmation, run inside a sandbox.
+- **"Proceed without confirmation" shows the checkpoint afterwards, not before.** By default the skill stops at a checkpoint (the sandbox warning and the claims list) before any project code runs and waits for your answer. If you tell it to proceed without confirmation, it does not stop: the same content becomes the first section of the report, "Proceeded without confirmation", so you see it only when the run is done. Use that mode only inside a sandbox.
 - Only Claude Code on macOS has been tested end to end. Other agents and operating systems are untested.
 - A bug that needs infrastructure the machine does not have (for example a Postgres database) can only be `traced`, not `reproduced`.
 

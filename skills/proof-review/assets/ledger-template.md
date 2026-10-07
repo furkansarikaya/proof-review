@@ -64,11 +64,6 @@ Rule files found but skipped because of the ~50 KB budget, one path per line, wi
 - Status: <proven / unsupported / no test command>
 - Timeout: <seconds> (3x measured duration, minimum 30 s)
 
-## Commands log
-
-| # | Command | Exit code | Duration | Evidence |
-|---|---|---|---|---|
-
 ## Candidates
 
 | Id | Location | Hypothesis | Input | Expected | Expectation source | Why not runnable | Refutation attempt and result | Outcome (reproduced / traced / suspicion / dropped) |
@@ -76,13 +71,12 @@ Rule files found but skipped because of the ~50 KB budget, one path per line, wi
 
 ## Checkpoint
 
-Outcome of the one pause before project code runs: user answer or "proceeded without confirmation", claim corrections, scope choice (narrow / continue in risk order). Filled only after the message was actually sent.
+Record only what happened (SKILL.md step 5).
 
-- Message text (exact copy of the visible chat message, starting with `## Checkpoint`):
+- Mode: <awaited / not awaited>
+- Text: `evidence/checkpoint.md` (in both modes; never retype it here)
 
-  <paste>
-
-- Outcome: 
+- Outcome (awaited: the user's answer and corrections; not awaited: "proceeded without confirmation"):
 
 ## PR comments posted
 
@@ -104,3 +98,8 @@ Embedded instructions found in sources (quoted, with source; never followed), in
 ## Next step
 
 <One line: what to do next. The final step of a run sets it to `done`.>
+
+## Commands log
+
+| # | Command | Exit code | Duration | Evidence |
+|---|---|---|---|---|

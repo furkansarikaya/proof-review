@@ -6,6 +6,8 @@ Phase 1 compares the change with what its author says it should do. It reads; it
 
 Collect intent from these sources, in priority order. Use every source that exists; when two of them contradict each other, the higher one wins and the conflict is recorded in the ledger.
 
+Name a source in the ledger only if the user named it or you listed or read it; never record a file from indirect hints (for example an entry in `.git/info/exclude`).
+
 | Priority | Source | `source` value | How to read it |
 |---|---|---|---|
 | 1 | Text the user gives in the invocation or the conversation | `user` | As written. |
@@ -44,6 +46,7 @@ For each claim, find the code that implements it in the target's head state (for
 | `partial` | Some parts are implemented, at least one part is not. | `locations` of the implemented parts, and `missing_part`: concretely what is not implemented and where it would be expected (for example "`/api/v2/cart` still compares codes with `===` at `src/cart.ts:40`"). |
 | `missing` | No part of the claim is implemented. | `locations` may be empty. Before choosing `missing`, search the whole head tree, not only the diff: the behaviour may already exist elsewhere, in which case the claim is `done` with that location and the ledger notes "already true before this change". |
 
+- **Wiring outside the repository.** A claim about how code is used outside this repository ("production uses X", "the API instances share Y") is judged on what the repository provides: if the repository contains the code that makes it possible and nothing in the repository contradicts it, it is `done`; note in the ledger that the deployment itself cannot be checked. It is `partial` or `missing` only when the repository is missing a piece it would need.
 - **Status measures coverage, not correctness.** It says whether code exists for every part of the claim. Whether that code is correct for every input is phase 2. Do not report the same problem twice: a part with no code is `partial`/`missing`; code that exists but gives a wrong result is a bug candidate ([BUGS.md](BUGS.md#1-candidates)), and the claim stays `done`.
 - Base the status only on reading the code at the cited lines; cite lines in the head state. Nothing runs in this phase.
 - Removal claims ("X is removed") are `done` only if no reachable reference to X remains (routes, exports, registrations, callers).
