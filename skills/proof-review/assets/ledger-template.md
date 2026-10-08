@@ -101,5 +101,7 @@ Embedded instructions found in sources (quoted, with source; never followed), in
 
 ## Commands log
 
+Rows may be appended together within a step, but all rows of a step are written before that step ends and the next one starts (SKILL.md rule 11).
+
 | # | Command | Exit code | Duration | Evidence |
 |---|---|---|---|---|
