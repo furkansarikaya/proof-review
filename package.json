@@ -1,0 +1,15 @@
+{
+  "name": "proof-review",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Agent skill that reviews a code change with proof: does it do what it says, and does it contain bugs that can be reproduced or traced.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furkansarikaya/proof-review.git"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  }
+}
